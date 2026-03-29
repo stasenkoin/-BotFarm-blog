@@ -1,9 +1,9 @@
-<div class="session-info container">
+<div class="session-info">
     {{#if isLoggedIn}}
-        <span>Вы вошли как <strong>{{userName}}</strong></span>
-        <a href="?logged_in=false" class="btn btn-sm">Выйти</a>
+        <span class="username">{{userName}}</span>
+        <a href="?logged_in=false" class="btn btn-ghost">Выйти</a>
     {{else}}
-        <span>Вы не авторизованы</span>
-        <a href="?logged_in=true" class="btn btn-sm">Войти</a>
+        <a href="?logged_in=true" class="btn btn-primary">Войти</a>
+        <a href="#" class="btn btn-ghost">Регистрация</a>
     {{/if}}
 </div>

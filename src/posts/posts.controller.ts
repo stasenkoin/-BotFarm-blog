@@ -7,7 +7,6 @@ export class PostsController {
   @Get()
   @Render('posts')
   getAllPosts(@Query('logged_in') loggedIn: string) {
-    // @Query — достаёт параметр из URL, например /posts?logged_in=true
     const isLoggedIn = loggedIn === 'true';
 
     return {
@@ -18,7 +17,6 @@ export class PostsController {
     };
   }
 
-  // GET /posts/1 — страница одного поста (число из URL попадает в :id)
   @Get(':id')
   @Render('post')
   getOnePost(@Param('id') id: string, @Query('logged_in') loggedIn: string) {

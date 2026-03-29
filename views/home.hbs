@@ -1,13 +1,17 @@
-<h1>Добро пожаловать в блог!</h1>
-<p>Это простой блог на NestJS + Handlebars + Prisma.</p>
+<div class="hero">
+    <h1>Добро пожаловать в Mamont!</h1>
+    <p> Наша новая отечественная платформа призвана дать возможность людям делиться своими мыслями онлайн!</p>
+</div>
 
-<section class="latest-posts">
+<div class="section-header">
     <h2>Последние посты</h2>
-    {{#each posts}}
-        <article class="post-card">
-            <h3><a href="/posts/{{this.id}}">{{this.title}}</a></h3>
-            <p class="post-meta">{{this.author}} &middot; {{this.categoryName}}</p>
-            <p>{{this.excerpt}}</p>
-        </article>
-    {{/each}}
-</section>
+    <a href="/posts">Все посты →</a>
+</div>
+
+{{#each posts}}
+    <article class="post-card">
+        <h3><a href="/posts/{{this.id}}">{{this.title}}</a></h3>
+        <p class="post-meta">{{this.author}} &middot; {{this.categoryName}} &middot; {{this.date}}</p>
+        <p>{{this.excerpt}}</p>
+    </article>
+{{/each}}

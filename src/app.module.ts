@@ -6,8 +6,6 @@ import { CommentsModule } from './comments/comments.module';
 import { UsersModule } from './users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
 
-// AppModule — корневой модуль приложения.
-// imports — подключаем все доменные модули.
 @Module({
   imports: [
     PrismaModule,

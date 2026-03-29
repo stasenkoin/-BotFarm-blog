@@ -1,0 +1,20 @@
+<article class="post-full">
+    <h1>{{post.title}}</h1>
+    <p class="post-meta">{{post.author}} &middot; {{post.categoryName}} &middot; {{post.date}}</p>
+
+    <div class="post-content">
+        {{{post.content}}}
+    </div>
+</article>
+
+<section class="comments">
+    <h2>Комментарии</h2>
+    {{#each comments}}
+        <div class="comment">
+            <strong>{{this.author}}</strong>
+            <p>{{this.content}}</p>
+        </div>
+    {{else}}
+        <p>Комментариев пока нет.</p>
+    {{/each}}
+</section>

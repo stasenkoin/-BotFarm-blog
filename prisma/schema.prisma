@@ -1,0 +1,87 @@
+// Prisma Schema — описание структуры базы данных.
+// Из этого файла Prisma генерирует:
+// 1. SQL-миграции (CREATE TABLE ...)
+// 2. TypeScript-клиент для работы с БД
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Берёт строку подключения из переменной окружения
+}
+
+// ============ МОДЕЛИ (ТАБЛИЦЫ) ============
+
+// Пользователь блога
+model User {
+  id        Int      @id @default(autoincrement()) // Первичный ключ, автоинкремент
+  name      String
+  email     String   @unique                       // Уникальное поле — нет двух юзеров с одним email
+  role      String   @default("reader")            // "reader", "author", "admin"
+  avatarUrl String?                                // ? означает что поле необязательное (NULL в БД)
+
+  posts    Post[]    // Связь: у пользователя может быть много постов
+  comments Comment[] // Связь: у пользователя может быть много комментариев
+}
+
+// Пост (статья блога)
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  status    String   @default("draft")             // "draft" или "published"
+  coverUrl  String?
+  createdAt DateTime @default(now())               // Автоматически ставит текущую дату
+
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id]) // Связь Many-to-One: пост принадлежит юзеру
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id]) // Связь Many-to-One: пост в категории
+
+  tags     PostTag[] // Связь Many-to-Many через промежуточную таблицу
+  comments Comment[]
+}
+
+// Категория постов
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+  slug String @unique // URL-friendly имя, например "web-development"
+
+  posts Post[]
+}
+
+// Тег
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  posts PostTag[] // Связь Many-to-Many через промежуточную таблицу
+}
+
+// Связующая таблица Post <-> Tag (Many-to-Many)
+model PostTag {
+  postId Int
+  post   Post @relation(fields: [postId], references: [id])
+
+  tagId Int
+  tag   Tag @relation(fields: [tagId], references: [id])
+
+  @@id([postId, tagId]) // Составной первичный ключ из двух полей
+}
+
+// Комментарий к посту
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  postId Int
+  post   Post @relation(fields: [postId], references: [id])
+}

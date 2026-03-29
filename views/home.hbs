@@ -1,0 +1,13 @@
+<h1>Добро пожаловать в блог!</h1>
+<p>Это простой блог на NestJS + Handlebars + Prisma.</p>
+
+<section class="latest-posts">
+    <h2>Последние посты</h2>
+    {{#each posts}}
+        <article class="post-card">
+            <h3><a href="/posts/{{this.id}}">{{this.title}}</a></h3>
+            <p class="post-meta">{{this.author}} &middot; {{this.categoryName}}</p>
+            <p>{{this.excerpt}}</p>
+        </article>
+    {{/each}}
+</section>
